@@ -28,7 +28,6 @@ echo "error";
 } else {
      echo "you have no records";
      }
-     
 
 header("Location: http://localhost/iRecommender/admin-dashbord/"); /* Redirect browser */
 exit();

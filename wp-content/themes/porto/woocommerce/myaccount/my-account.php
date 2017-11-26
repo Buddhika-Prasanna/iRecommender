@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $porto_woo_version = porto_get_woo_version_number();
+$con = mysqli_connect("localhost","root","","wealthpa_wp752"); 
 
 wc_print_notices(); ?>
 
@@ -23,6 +24,24 @@ wc_print_notices(); ?>
 	fwrite($myfile, (string)$txt);
 	fclose($myfile);
 	/*Write username on login*/
+
+	/*Write username on login*/
+	$Sql = "SELECT USER_ID, VALUE FROM wp6t_cimy_uef_data WHERE USER_ID ='".$txt."' ";
+	$result = mysqli_query($con, $Sql); 
+
+	if (mysqli_num_rows($result) > 0) {
+	$kiafile = fopen("iRecommender-Logs/Kia/". $txt .".txt", "w") or die("Unable to open file!");
+    while($row = mysqli_fetch_array($result)) {
+       $file = fopen('iRecommender-Logs/Kia/Log.csv',"a");
+        /*fputcsv($file,array_values($row));*/
+        fwrite($kiafile, $row[1]);
+		fclose($kiafile);
+     }
+} else {
+     echo "you have no records";
+     }
+	/*Write username on login*/
+
 	printf(
 		__( 'Hello <strong>%1$s</strong> (not %1$s? <a href="%2$s">Sign out</a>).', 'woocommerce' ) . ' ',
 		$current_user->display_name,
